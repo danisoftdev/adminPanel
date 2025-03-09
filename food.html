@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Items</title>
+<link rel="stylesheet" href="food.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <h1 class="logo">Food Items</h1>
+            <ul class="menu-items">
+                <li><a href="index.html">Back to Restaurants</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Showcase area -->
+    <section class="showcase-area" id="showcase">
+        <div class="showcase-container">
+            <!-- Add Food Item Button -->
+            <button id="addFoodItemButton" onclick="openFoodItemForm()">Add Food Item</button>
+
+            <!-- Form for Adding/Editing Food Items -->
+            <div id="foodItemForm">
+                <h2>Add Food Item</h2>
+                <form id="addFoodItemForm">
+                    <input type="hidden" id="foodItemId" name="foodItemId">
+                    <label for="foodName">Food Name:</label>
+                    <input type="text" id="foodName" name="foodName" required><br>
+                    <label for="foodPrice">Price:</label>
+                    <input type="number" id="foodPrice" name="foodPrice" required><br>
+                    <label for="foodImage">Upload Image:</label>
+                    <input type="file" id="foodImage" accept="image/*"><br>
+                    <button type="button" onclick="saveFoodItem()">Save</button>
+                </form>
+            </div>
+
+            <!-- Heading for Food Items List -->
+            <h2 class="food-list-heading">Food Items List</h2>
+
+            <!-- Container for Food Items -->
+            <div id="foodItemsContainer" class="food-container container">
+                <!-- Food items will be dynamically added here -->
+            </div>
+        </div>
+    </section>
+
+    <script src="food.js"></script>
+</body>
+
+</html>

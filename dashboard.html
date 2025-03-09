@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Admin Dashboard</title>
+    <style>
+        /* Admin Panel CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background: #f4f4f4;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #23242a;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            background: #45f3ff;
+            border-radius: 5px;
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .sidebar ul li a:hover {
+            background: #38c2d2;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            margin-left: 260px;
+            width: 100%;
+        }
+
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 350px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #45f3ff;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #38c2d2;
+        }
+
+        .restaurant-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .restaurant-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
+            cursor: pointer;
+        }
+
+        .restaurant-card img {
+            width: 100%;
+            height: 150px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .restaurant-card h3 {
+            margin: 10px 0;
+        }
+
+        .restaurant-card p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .list ul {
+            list-style: none;
+        }
+
+        .list ul li {
+            padding: 10px;
+            background: white;
+            margin-top: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background: #45f3ff;
+            color: white;
+        }
+
+        table tr:hover {
+            background: #f1f1f1;
+        }
+
+        .action-buttons button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .action-buttons .edit {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .action-buttons .delete {
+            background: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li><a href="#" onclick="showSection('restaurantSection')">All Restaurants</a></li>
+            <li><a href="#" onclick="showSection('foodSection')">All Food Items</a></li>
+            <li><a href="#" onclick="showSection('orderSection')">All Orders</a></li>
+        </ul>
+    </div>
+
+    <!-- all order -->
+    <!-- Orders Section -->
+    <div id="orderSection" style="display: none;">
+        <h2>All Orders</h2>
+        <table id="orderTable">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Food Name</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Customer Name</th>
+                    <th>Customer Address</th>
+                    <th>Customer Phone</th>
+                    <th>Timestamp</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Orders will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Restaurant Section -->
+        <div id="restaurantSection">
+            <h2>All Restaurants</h2>
+            <table id="restaurantTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Restaurants will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Food Items Section -->
+        <div id="foodSection" style="display: none;">
+            <h2>All Food Items</h2>
+            <table id="foodTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Restaurant</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Food items will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

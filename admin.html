@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Animated Login Form</title>
+	<link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+	<section>
+		<div class="login-box">
+			<div class="box">
+				<form autocomplete="off" class="login-form">
+					<h2>Admin</h2>
+					<div class="inputBox">
+						<input type="text" required="required" id="username">
+						<span>Username</span>
+						<i></i>
+					</div>
+					<div class="inputBox">
+						<input type="password" required="required" id="password">
+						<span>Password</span>
+						<i></i>
+					</div>
+					<div class="links">
+						<a href="#">Forgot Password?</a>
+						<!-- <a href="#">Signup</a> -->
+					</div>
+					<input type="submit" value="Login" class="btn">
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<script>
+
+		document.querySelector('.btn').addEventListener('click', function (event) {
+			event.preventDefault();
+			const username = document.querySelector('#username').value;
+			const password = document.querySelector('#password').value;
+
+			if (username === 'admin' && password === 'admin') {
+				window.location.href = 'dashboard.html';
+			} else if (username !== 'username' && password !== 'admin') {
+				alert('Invalid username and password');
+			}
+			else if (username === '' || password === '') {
+				alert('Please fill your username and password');
+			}
+			else if (username !== 'admin') {
+				alert('Your username is invalid');
+			} else if (password !== 'admin') {
+				alert('Your password is incorrect');
+			}
+
+			else {
+				alert('Invalid password or username');
+			}
+		});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+        /* Navbar styling */
+        .navbar {
+            box-shadow: 0px 5px 10px 0px #aaa;
+            position: fixed;
+            width: 100%;
+            background: #fff;
+            color: #000;
+            opacity: 0.85;
+            height: 50px;
+            z-index: 12;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+            max-width: 1200px;
+            width: 90%;
+            margin: auto;
+        }
+
+        .menu-items {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-items li {
+            margin-left: 1.5rem;
+        }
+
+        .menu-items a {
+            text-decoration: none;
+            color: #444;
+            font-weight: 500;
+            font-size: 1.2rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .menu-items a:hover {
+            color: #117964;
+        }
+
+        .logo {
+            font-size: 2.3rem;
+            font-weight: bold;
+            color: #16a083;
+        }
+
+        /* Showcase area */
+        .showcase-area {
+            padding-top: 80px;
+            /* To account for the fixed navbar */
+        }
+
+        /* Food items styling */
+        .food-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .food-item {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .food-item img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .food-item h4 {
+            margin: 10px 0;
+        }
+
+        .food-item p {
+            margin: 5px 0;
+        }
+
+        .food-item button {
+            margin: 5px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .food-item button.edit {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .food-item button.delete {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .food-item button.order {
+            background-color: #008CBA;
+            color: white;
+        }
+
+        /* Form styling */
+        #foodItemForm {
+            display: none;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        #foodItemForm input,
+        #foodItemForm button {
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #addFoodItemButton {
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .food-list-heading {
+            margin: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                height: auto;
+                padding: 10px 0;
+            }
+
+            .menu-items {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 10px;
+            }
+
+            .menu-items li {
+                margin: 10px 0;
+            }
+
+            .logo {
+                margin-bottom: 10px;
+            }
+        }

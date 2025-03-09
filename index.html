@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Restaurant Management</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<nav class="navbar">
+		<div class="navbar-container container">
+			<input type="checkbox" name="" id="">
+			<div class="hamburger-lines">
+				<span class="line line1"></span>
+				<span class="line line2"></span>
+				<span class="line line3"></span>
+			</div>
+			<ul class="menu-items">
+				<li><a href="#home">Home</a></li>
+				<li><a href="#about">About</a></li>
+				<li><a href="#food">All Restaurants</a></li>
+				<li><a href="#testimonials">Testimonial</a></li>
+				<li><a href="#contact">Contact</a></li>
+			</ul>
+			<h1 class="logo">My Restaurant</h1>
+		</div>
+	</nav>
+	<button id="addFoodItemButton" onclick="openForm()">Add Resturant</button>
+	<section class="showcase-area" id="showcase">
+		<div class="showcase-container">
+			<div id="resturantForm" style="display:none;">
+				<h2>Add Restaurant</h2>
+				<form id="addResturantForm">
+					<input type="hidden" id="restaurantId" name="restaurantId">
+					<label for="resturantname">Restaurant Name:</label>
+					<input type="text" id="resturantname" name="resturantname" required><br>
+					<label for="phone">Phone:</label>
+					<input type="text" id="phone" name="phone" required><br>
+					<label for="address">Address:</label>
+					<input type="text" id="address" name="address" required><br>
+					<label for="image">Upload Image:</label>
+					<input type="file" id="image" accept="image/*"><br>
+					<button type="button" onclick="saveResturant()">Save</button>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<section id="food">
+		<h2>Our Restaurants</h2>
+		<div class="food-container container">
+			<!-- Restaurants will be dynamically added here -->
+		</div>
+	</section>
+
+	<footer id="footer">
+		<h2>Restaurant &copy; all rights reserved</h2>
+	</footer>
+
+	<script>
+		// Function to open or close the restaurant form
+		function openForm() {
+			const form = document.getElementById('resturantForm');
+			if (form.style.display === 'block') {
+				form.style.display = 'none';
+			} else {
+				form.style.display = 'block';
+				document.getElementById('addResturantForm').reset(); // Reset the form
+				document.getElementById('restaurantId').value = ''; // Clear the restaurant ID
+			}
+		}
+
+		// Function to save or update a restaurant
+		function saveResturant() {
+			const restaurantId = document.getElementById('restaurantId').value;
+			const restaurantName = document.getElementById('resturantname').value;
+			const phone = document.getElementById('phone').value;
+			const address = document.getElementById('address').value;
+			const imageInput = document.getElementById('image');
+
+			if (!restaurantName || !phone || !address) {
+				alert("Please fill all fields.");
+				return;
+			}
+
+			let restaurants = JSON.parse(localStorage.getItem('restaurants')) || [];
+
+			if (restaurantId) {
+				// Editing an existing restaurant
+				let restaurant = restaurants.find(restaurant => restaurant.id == restaurantId);
+				if (restaurant) {
+					restaurant.restaurantName = restaurantName;
+					restaurant.phone = phone;
+					restaurant.address = address;
+
+					if (imageInput.files.length) {
+						const reader = new FileReader();
+						reader.onloadend = function () {
+							restaurant.image = reader.result;
+							localStorage.setItem('restaurants', JSON.stringify(restaurants));
+							displayRestaurants();
+						};
+						reader.readAsDataURL(imageInput.files[0]);
+					} else {
+						localStorage.setItem('restaurants', JSON.stringify(restaurants));
+						displayRestaurants();
+					}
+				}
+			} else {
+				// Adding a new restaurant
+				if (!imageInput.files.length) {
+					alert("Please upload an image.");
+					return;
+				}
+
+				const reader = new FileReader();
+				reader.onloadend = function () {
+					const restaurant = {
+						id: Date.now(),
+						restaurantName,
+						phone,
+						address,
+						image: reader.result,
+						foodItems: [] // Array to store food items
+					};
+
+					restaurants.push(restaurant);
+					localStorage.setItem('restaurants', JSON.stringify(restaurants));
+					displayRestaurants();
+				};
+				reader.readAsDataURL(imageInput.files[0]);
+			}
+
+			// Reset the form and hide it
+			document.getElementById('addResturantForm').reset();
+			document.getElementById('resturantForm').style.display = 'none';
+		}
+
+		// Function to display restaurants
+		function displayRestaurants() {
+			const restaurants = JSON.parse(localStorage.getItem('restaurants')) || [];
+			const container = document.querySelector('.food-container');
+			container.innerHTML = '';
+
+			restaurants.forEach((restaurant) => {
+				const restaurantDiv = document.createElement('div');
+				restaurantDiv.classList.add('food-type');
+				restaurantDiv.innerHTML = `
+                    <div class="img-container">
+                        <img src="${restaurant.image}" alt="Restaurant Image">
+                        <div class="img-content">
+                            <h3>${restaurant.restaurantName}</h3>
+                            <h4>${restaurant.phone}</h4>
+                            <h4>${restaurant.address}</h4>
+                            <button onclick="editRestaurant(${restaurant.id})">Edit</button>
+                            <button onclick="deleteRestaurant(${restaurant.id})">Delete</button>
+                            <button onclick="window.location.href='food.html?restaurantId=${restaurant.id}'">View Item</button>
+                        </div>
+                    </div>
+                `;
+				container.appendChild(restaurantDiv);
+			});
+		}
+
+		// Function to delete a restaurant
+		function deleteRestaurant(id) {
+			let restaurants = JSON.parse(localStorage.getItem('restaurants')) || [];
+			restaurants = restaurants.filter(restaurant => restaurant.id !== id);
+			localStorage.setItem('restaurants', JSON.stringify(restaurants));
+			displayRestaurants();
+		}
+
+		// Function to edit a restaurant
+		function editRestaurant(id) {
+			let restaurants = JSON.parse(localStorage.getItem('restaurants')) || [];
+			let restaurant = restaurants.find(restaurant => restaurant.id === id);
+
+			if (!restaurant) {
+				alert("Restaurant not found.");
+				return;
+			}
+
+			// Populate the form fields
+			document.getElementById('restaurantId').value = restaurant.id;
+			document.getElementById('resturantname').value = restaurant.restaurantName;
+			document.getElementById('phone').value = restaurant.phone;
+			document.getElementById('address').value = restaurant.address;
+
+			// Show the form
+			document.getElementById('resturantForm').style.display = 'block';
+		}
+
+		// Load restaurants when the page loads
+		document.addEventListener('DOMContentLoaded', displayRestaurants);
+	</script>
+</body>
+
+</html>
